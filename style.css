@@ -1,4 +1,4 @@
-@font-face {
+   @font-face {
         font-family: 'DungGeunMo';
         src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
         font-weight: normal;
@@ -29,16 +29,57 @@
         display: flex;
         width: 100vw;
         height: 100vh;
-        /* Using a public domain / free-to-use pixel art city background */
-        background-image: url('https://i.imgur.com/K3mEVxS.gif');
+        /* Reliable 16-bit aesthetic city night background */
+        background-color: #0b0f19;
+        background-image: url('https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif');
         background-size: cover;
         background-position: center bottom;
         background-repeat: no-repeat;
+        position: relative;
+    }
+    /* CRT Scanline Effect Overlay */
+    #game-container::after {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+        z-index: 2;
+        background-size: 100% 4px, 6px 100%;
+        pointer-events: none;
+        /* Let clicks pass through */
+    }
+    /* Animated Cloud Layers */
+    .clouds {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 100%;
+        background: url('https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/clouds.png') repeat-x;
+        background-size: auto 100px;
+        z-index: 1;
+        opacity: 0.3;
+        animation: moveClouds 60s linear infinite;
+        pointer-events: none;
+    }
+    @keyframes moveClouds {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
     }
     #desktop {
         flex: 1;
         position: relative;
         overflow: hidden;
+        z-index: 5;
+        /* Above scanlines */
     }
     #sidebar {
         width: 350px;
@@ -50,6 +91,8 @@
         padding: 10px;
         overflow-y: auto;
         backdrop-filter: blur(2px);
+        z-index: 10;
+        /* Above scanlines */
     }
     .widget {
         margin-bottom: 20px;
@@ -219,4 +262,45 @@
     .preset-sprite.selected {
         border-color: #92cc41;
         background-color: rgba(146, 204, 65, 0.2);
+    }
+    /* === Responsive Design (Mobile & Tablet) === */
+    @media (max-width: 768px) {
+        #game-container {
+            flex-direction: column;
+            overflow-y: auto;
+            /* allow scroll on mobile */
+        }
+        #desktop {
+            flex: none;
+            height: 50vh;
+            /* take half screen height on mobile */
+            min-height: 400px;
+            width: 100%;
+        }
+        #sidebar {
+            width: 100%;
+            border-left: none;
+            border-top: 4px solid #fff;
+            height: auto;
+            overflow: visible;
+            /* no internal scroll on mobile, let the container handle it */
+            padding-bottom: 80px;
+            /* space for add button */
+        }
+        #add-btn-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        #toast {
+            right: 50%;
+            transform: translateX(50%);
+            bottom: 80px;
+        }
+        .draggable-asset {
+            transform: scale(0.8);
+            /* slightly smaller items on mobile */
+        }
     }
