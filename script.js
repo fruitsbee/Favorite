@@ -252,7 +252,7 @@ window.saveNewBookmark = function (e) {
     // reset to first sprite
     let firstSprite = document.querySelector('.preset-sprite');
     if (firstSprite) {
-        window.selectSprite(firstSprite, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/mario.png');
+        window.selectSprite(firstSprite, 'https://unpkg.com/nes.css/assets/mario.png');
     }
 };
 window.deleteBookmarkAsset = function (id) {
