@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retro Web Dashboard</title>
+
     <!-- NES.css -->
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
     <!-- Interact.js for Drag and Drop -->
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
     <!-- Local CSS -->
     <link href="style.css" rel="stylesheet">
 </head>
+
 <body>
+
     <div id="game-container">
         <div class="clouds"></div>
         <div id="desktop">
             <!-- Bookmark sprites will be injected here -->
         </div>
+
         <div id="sidebar">
             <div class="nes-container with-title is-dark widget" id="calendar-widget">
                 <p class="title">일정 (2주)</p>
                 <div id="calendar-list" class="widget-content">로딩중...</div>
             </div>
+
             <div class="nes-container with-title is-dark widget" id="todo-widget">
                 <p class="title">할 일</p>
                 <div class="todo-input-group">
@@ -34,6 +42,7 @@
                 </div>
                 <div id="todo-list" class="widget-content">로딩중...</div>
             </div>
+
             <div class="nes-container with-title is-dark widget" id="memo-widget">
                 <p class="title">메모장</p>
                 <div class="widget-content">
@@ -43,6 +52,7 @@
             </div>
         </div>
     </div>
+
     <!-- Add Bookmark Modal -->
     <dialog class="nes-dialog is-dark" id="add-bookmark-modal">
         <form method="dialog">
@@ -82,21 +92,26 @@
             </menu>
         </form>
     </dialog>
+
     <div id="add-btn-container" style="display: none;">
         <button type="button" class="nes-btn is-success"
             onclick="document.getElementById('add-bookmark-modal').showModal()">+ 에셋 추가</button>
     </div>
+
     <!-- Notification Toast -->
     <div id="toast" class="nes-balloon from-right is-dark"
         style="display: none; position: absolute; bottom: 20px; right: 380px; z-index: 1000;">
         <p id="toast-msg">저장되었습니다!</p>
     </div>
+
     <!-- Loading Overlay -->
     <div id="loading-overlay"
         style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; color:white; justify-content:center; align-items:center;">
         <p>통신 중...</p>
     </div>
+
     <!-- Local JS -->
     <script src="script.js"></script>
 </body>
+
 </html>
