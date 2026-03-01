@@ -386,7 +386,7 @@
             border-bottom: none !important;
         }
         .mobile-menu-btn {
-            display: block;
+            display: block !important;
             position: absolute;
             top: 20px;
             right: 20px;
@@ -395,7 +395,7 @@
             font-size: 20px;
         }
         .mobile-close-btn {
-            display: block;
+            display: block !important;
             align-self: flex-end;
             margin-bottom: 10px;
             padding: 2px 8px;
