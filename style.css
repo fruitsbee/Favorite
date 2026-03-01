@@ -1,0 +1,182 @@
+@font-face {
+        font-family: 'DungGeunMo';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: 'DungGeunMo', 'Press Start 2P', cursive;
+        background-color: #2b2b2b;
+        /* dark retro background */
+        color: #fff;
+        overflow: hidden;
+        /* no scroll */
+    }
+    /* Override NES.css font */
+    .nes-container,
+    .nes-btn,
+    .nes-input,
+    .nes-textarea,
+    .nes-balloon,
+    dialog {
+        font-family: 'DungGeunMo', 'Press Start 2P', cursive !important;
+    }
+    #game-container {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        background-image:
+            linear-gradient(45deg, #222 25%, transparent 25%, transparent 75%, #222 75%, #222),
+            linear-gradient(45deg, #222 25%, transparent 25%, transparent 75%, #222 75%, #222);
+        background-size: 20px 20px;
+        background-position: 0 0, 10px 10px;
+    }
+    #desktop {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+    }
+    #sidebar {
+        width: 350px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-left: 4px solid #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        overflow-y: auto;
+    }
+    .widget {
+        margin-bottom: 20px;
+    }
+    .widget-content {
+        max-height: 250px;
+        overflow-y: auto;
+    }
+    /* Scrollbar override */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #000;
+        border-left: 2px solid #fff;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #fff;
+        border: 2px solid #000;
+    }
+    .todo-input-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .todo-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+    .todo-item label {
+        flex: 1;
+        margin: 0;
+        padding-left: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+    }
+    .todo-item label span {
+        margin-left: 10px;
+    }
+    .todo-item .delete-btn {
+        color: #e76e55;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 0 5px;
+    }
+    #memo-textarea {
+        height: 150px;
+        resize: none;
+        font-size: 14px;
+        width: 100%;
+    }
+    .calendar-item {
+        font-size: 12px;
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        border-bottom: 2px dashed #555;
+    }
+    .calendar-item.today {
+        color: #fada5e;
+    }
+    .calendar-time {
+        color: #92cc41;
+        font-size: 10px;
+    }
+    /* Draggable Asset (Bookmark) */
+    .draggable-asset {
+        position: absolute;
+        width: 80px;
+        text-align: center;
+        cursor: url('https://unpkg.com/nes.css/assets/cursor-click.png'), pointer;
+        user-select: none;
+        touch-action: none;
+        z-index: 10;
+    }
+    .draggable-asset .icon {
+        font-size: 40px;
+        line-height: 1;
+        text-shadow: 2px 2px 0 #000;
+        margin-bottom: 5px;
+        transition: transform 0.1s;
+    }
+    .draggable-asset:hover .icon {
+        transform: scale(1.1);
+    }
+    .draggable-asset .label {
+        background: #000;
+        color: #fff;
+        padding: 2px 4px;
+        font-size: 12px;
+        border: 2px solid #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+    .draggable-asset .delete-asset {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: #e76e55;
+        color: #fff;
+        border: 2px solid #fff;
+        width: 20px;
+        height: 20px;
+        line-height: 16px;
+        text-align: center;
+        font-size: 12px;
+        cursor: pointer;
+        display: none;
+        z-index: 11;
+    }
+    .draggable-asset:hover .delete-asset {
+        display: block;
+    }
+    #add-btn-container {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 100;
+    }
+    #toast {
+        position: absolute;
+        bottom: 20px;
+        right: 370px;
+        z-index: 1000;
+    }
