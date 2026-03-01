@@ -56,8 +56,33 @@
                 <input type="text" id="bm-url" class="nes-input is-dark" placeholder="https://">
             </div>
             <div class="nes-field">
-                <label for="bm-icon">아이콘 (이모지)</label>
-                <input type="text" id="bm-icon" class="nes-input is-dark" value="💾">
+                <label>캐릭터/아이템 선택</label>
+                <div class="preset-container" id="sprite-presets">
+                    <!-- Public domain pixel art sprites -->
+                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/mario.png"
+                        class="preset-sprite selected"
+                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/mario.png')">
+                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/ash.png"
+                        class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/ash.png')">
+                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/pokeball.png"
+                        class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/pokeball.png')">
+                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/bulbasaur.png"
+                        class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/bulbasaur.png')">
+                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/squirtle.png"
+                        class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/squirtle.png')">
+                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/charmander.png"
+                        class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/charmander.png')">
+                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/kirby.png"
+                        class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/kirby.png')">
+                </div>
+                <input type="hidden" id="bm-icon"
+                    value="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/mario.png">
             </div>
             <menu class="dialog-menu" style="margin-top: 20px; text-align: right;">
                 <button class="nes-btn" onclick="document.getElementById('add-bookmark-modal').close()">취소</button>
