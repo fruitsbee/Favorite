@@ -58,7 +58,8 @@
     }
 
     /* Animated Cloud Layers */
-    .clouds {\n        display: none !important;
+    .clouds {
+        display: none !important;
         position: absolute;
         top: 0;
         left: 0;
@@ -268,10 +269,9 @@
         display: none;
         z-index: 10;
     }
-    .draggable-asset:hover .lock-asset {
-        display: block;
-    }
-\n    .delete-asset {
+    
+
+    .delete-asset {
         position: absolute;
         top: -10px;
         right: -10px;
@@ -288,7 +288,7 @@
         z-index: 11;
     }
 
-    .draggable-asset:hover 
+    .draggable-asset:hover, 
     .draggable-asset.locked {
         border-color: #4CAF50 !important;
         background: rgba(76, 175, 80, 0.1) !important;
@@ -313,10 +313,9 @@
         display: none;
         z-index: 10;
     }
-    .draggable-asset:hover .lock-asset {
-        display: block;
-    }
-\n    
+    
+
+    
 
     #add-btn-container {
         position: absolute;
@@ -362,11 +361,19 @@
     .mobile-menu-btn, .mobile-close-btn {
         display: none;
     }
-\n    /* === Responsive Design (Mobile & Tablet) === */
+
+    /* === Responsive Design (Mobile & Tablet) === */
     
 }
 
     
+    
+    /* Universal Button Visiblity */
+    .draggable-asset:hover .lock-asset,
+    .draggable-asset:hover .delete-asset {
+        display: block !important;
+    }
+
     /* Improved Mobile Layout */
     @media (max-width: 768px) {
         body { overflow: hidden !important; }
