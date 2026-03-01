@@ -227,16 +227,20 @@
     }
 
     .draggable-asset .label {
-        background: rgba(0, 0, 0, 0.7);
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 5px;
+        background: rgba(0, 0, 0, 0.8);
         color: #fff;
-        padding: 2px 4px;
+        padding: 4px 6px;
         font-size: 12px;
         border: 2px solid #fff;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-        max-width: 100%;
+        width: max-content;
+        z-index: 12;
+        pointer-events: none;
     }
 
     .draggable-asset 
