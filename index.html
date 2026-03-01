@@ -17,6 +17,7 @@
 </head>
 <body>
     <div id="game-container">
+        <div class="clouds"></div>
         <div id="desktop">
             <!-- Bookmark sprites will be injected here -->
         </div>
@@ -57,31 +58,25 @@
             <div class="nes-field">
                 <label>캐릭터/아이템 선택</label>
                 <div class="preset-container" id="sprite-presets">
-                    <!-- Public domain pixel art sprites -->
-                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/mario.png"
-                        class="preset-sprite selected"
-                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/mario.png')">
-                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/ash.png"
-                        class="preset-sprite"
-                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/ash.png')">
-                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/pokeball.png"
-                        class="preset-sprite"
-                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/pokeball.png')">
-                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/bulbasaur.png"
-                        class="preset-sprite"
-                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/bulbasaur.png')">
-                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/squirtle.png"
-                        class="preset-sprite"
-                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/squirtle.png')">
-                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/charmander.png"
-                        class="preset-sprite"
-                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/charmander.png')">
-                    <img src="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/kirby.png"
-                        class="preset-sprite"
-                        onclick="window.selectSprite(this, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/kirby.png')">
+                    <!-- Reliable CDN pixel art sprites from NES.css -->
+                    <img src="https://unpkg.com/nes.css/assets/mario.png" class="preset-sprite selected"
+                        onclick="window.selectSprite(this, 'https://unpkg.com/nes.css/assets/mario.png')">
+                    <img src="https://unpkg.com/nes.css/assets/ash.png" class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://unpkg.com/nes.css/assets/ash.png')">
+                    <img src="https://unpkg.com/nes.css/assets/pokeball.png" class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://unpkg.com/nes.css/assets/pokeball.png')">
+                    <img src="https://unpkg.com/nes.css/assets/bulbasaur.png" class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://unpkg.com/nes.css/assets/bulbasaur.png')">
+                    <img src="https://unpkg.com/nes.css/assets/squirtle.png" class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://unpkg.com/nes.css/assets/squirtle.png')">
+                    <img src="https://unpkg.com/nes.css/assets/charmander.png" class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://unpkg.com/nes.css/assets/charmander.png')">
+                    <img src="https://unpkg.com/nes.css/assets/kirby.png" class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://unpkg.com/nes.css/assets/kirby.png')">
+                    <img src="https://unpkg.com/nes.css/assets/snes-jp-logo.png" class="preset-sprite"
+                        onclick="window.selectSprite(this, 'https://unpkg.com/nes.css/assets/snes-jp-logo.png')">
                 </div>
-                <input type="hidden" id="bm-icon"
-                    value="https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/mario.png">
+                <input type="hidden" id="bm-icon" value="https://unpkg.com/nes.css/assets/mario.png">
             </div>
             <menu class="dialog-menu" style="margin-top: 20px; text-align: right;">
                 <button class="nes-btn" onclick="document.getElementById('add-bookmark-modal').close()">취소</button>
