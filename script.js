@@ -252,7 +252,7 @@ window.saveNewBookmark = function (e) {
     // reset to first sprite
     let firstSprite = document.querySelector('.preset-sprite');
     if (firstSprite) {
-        window.selectSprite(firstSprite, 'https://unpkg.com/nes.css/assets/mario.png');
+        window.selectSprite(firstSprite, 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJzSURBVHgB7VRNT9swEJ3YcUIKjVqp+lGkHvoL2m2XXnroD+jSnvsz2g/oH+i1/YF2Y9e0g1QpD+OATpw49oxtR1okqFVJuxzJW+95b868Z2dsA/xncJ4E//nAB/4zS0LgH4k0X17e1i9/+J0Lh2N311x6QkH5w2ZzD65fv+L2D25x/+CI29k+5rY2/uH29wX6q3M5W+gJBeWHyWSOZFlCrVbF/Pw8Go0GSqUSarUaHj9+jFKphGKxiNlsBoVCAXNzcxIE3r+rUOhSj0AUBaTTCn4dHHDrq+vc3OIC9+PzK25r8yv3af0z53ke0uk0BEHA7OwsoriARqOBeq2KyUkVi4sLaDQasCwL1Wo1k56sYxiGUBQR+XwehmHAsiycnp6hWi0nUik5wNlsJqrVKkqlEpaWllAul1GpVFAqlaDT6VAoFKAoSuoIqqpioVDINE1UKhXcunUL4/EIt7e3ODk5QTsOEAQBNjc3oWkapmmK8Xgc/wG2bcN1XWxvb+Pw8DBTqBwOh6Ggqio0TeN5nod+v49KpZJ1z0qlAtd1YRgGPM+DpmngOA50XUccx5l527aF6+trPuyB9zEMQ1xeXvJ6vQ5VVcFxHHRdB9d1sba2hqOjI/R6PQwGA9zexjg+Pkar1UI+n88cIEkSKpUKBEHA/v4+ms0mOI6DIAiYzWbYs4E0TSEIAlKpFDRNg+d5CIIARVHQ7XahKAp4nqenC15bWwPP8zAM4+zBwYHLv1jNzsFwOITS2trAysrLw9nZmXxycsJlWVnZ3w/lI8vKiV7/X/92bW5ufnd0dAS2o/z6n6D2d2+w8vII/AOf4zP4v32eZAAAAABJRU5ErkJggg==');
     }
 };
 window.deleteBookmarkAsset = function (id) {
