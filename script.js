@@ -174,7 +174,16 @@ function appendBookmarkElement(bm) {
     // Use valid responsive percentages, default to center (50%) if invalid/huge pixel values
     let safeX = parseFloat(bm.x) || 50;
     let safeY = parseFloat(bm.y) || 50;
-    if (safeX > 100 || safeX < -50) safeX = 50; // Legacy pixel cleanup
+    let isLockedBackend = false;
+    
+    // Decode lock state from X coordinate (+1000 means locked)
+    if (safeX >= 1000) {
+        isLockedBackend = true;
+        safeX -= 1000;
+    } else if (safeX > 100 || safeX < -50) {
+        safeX = 50; // Legacy pixel cleanup
+    }
+
     if (safeY > 100 || safeY < -50) safeY = 50;
     
     // Position using percentages so they stick visually relative to the background
@@ -191,7 +200,7 @@ function appendBookmarkElement(bm) {
         div.style.height = localState.h;
     }
 
-    if (localState.locked) {
+    if (localState.locked || isLockedBackend) {
         div.classList.add('locked');
     }
 
@@ -229,6 +238,14 @@ window.toggleLock = function (id) {
     let localState = localStateStr ? JSON.parse(localStateStr) : { w: el.style.width, h: el.style.height };
     localState.locked = !isLocked;
     localStorage.setItem('state_' + id, JSON.stringify(localState));
+    
+    // Sync to backend
+    let currentPX = parseFloat(el.getAttribute('data-px')) || 50;
+    let currentPY = parseFloat(el.getAttribute('data-py')) || 50;
+    let syncX = localState.locked ? currentPX + 1000 : currentPX; // Encode lock
+    gasApiCall({ action: 'saveBookmarkPosition', id: id, x: Math.round(syncX * 100) / 100, y: Math.round(currentPY * 100) / 100 })
+        .catch(console.error);
+
 };
 
 // === INTERACT.JS CONFIG ===
@@ -253,6 +270,9 @@ function setupInteractJs() {
                     let target = event.target;
                     let x = parseFloat(target.getAttribute('data-px')) || 50;
                     let y = parseFloat(target.getAttribute('data-py')) || 50;
+                    if (target.classList.contains('locked')) {
+                        x += 1000; // Preserve lock state
+                    }
                     // Round percentages to 2 decimal places to save space
                     x = Math.round(x * 100) / 100;
                     y = Math.round(y * 100) / 100;
@@ -273,6 +293,9 @@ function setupInteractJs() {
 
                     let x = parseFloat(target.getAttribute('data-px')) || 50;
                     let y = parseFloat(target.getAttribute('data-py')) || 50;
+                    if (target.classList.contains('locked')) {
+                        x += 1000; // Preserve lock state
+                    }
                     // Round percentages to 2 decimal places to save space
                     x = Math.round(x * 100) / 100;
                     y = Math.round(y * 100) / 100;
