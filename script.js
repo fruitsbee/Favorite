@@ -423,3 +423,11 @@ window.deleteBookmarkAsset = function (id) {
             .catch(console.error);
     }
 };
+
+// === MOBILE MENU ===
+window.toggleMobileMenu = function() {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('open');
+    }
+};
