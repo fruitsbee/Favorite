@@ -239,7 +239,36 @@
         max-width: 100%;
     }
 
-    .draggable-asset .delete-asset {
+    .draggable-asset 
+    .draggable-asset.locked {
+        border-color: #4CAF50 !important;
+        background: rgba(76, 175, 80, 0.1) !important;
+    }
+    .draggable-asset.locked .sprite-icon {
+        pointer-events: none;
+    }
+    .lock-asset {
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        background: #4CAF50;
+        color: white;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+        cursor: pointer;
+        display: none;
+        z-index: 10;
+    }
+    .draggable-asset:hover .lock-asset,
+    .draggable-asset.locked .lock-asset {
+        display: block;
+    }
+\n    .delete-asset {
         position: absolute;
         top: -10px;
         right: -10px;
@@ -256,7 +285,36 @@
         z-index: 11;
     }
 
-    .draggable-asset:hover .delete-asset {
+    .draggable-asset:hover 
+    .draggable-asset.locked {
+        border-color: #4CAF50 !important;
+        background: rgba(76, 175, 80, 0.1) !important;
+    }
+    .draggable-asset.locked .sprite-icon {
+        pointer-events: none;
+    }
+    .lock-asset {
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        background: #4CAF50;
+        color: white;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+        cursor: pointer;
+        display: none;
+        z-index: 10;
+    }
+    .draggable-asset:hover .lock-asset,
+    .draggable-asset.locked .lock-asset {
+        display: block;
+    }
+\n    .delete-asset {
         display: block;
     }
 
@@ -301,82 +359,31 @@
     }
 
     /* === Responsive Design (Mobile & Tablet) === */
-    @media (max-width: 768px) {
-        #game-container {
-            flex-direction: column;
-            overflow-y: auto;
-            /* allow scroll on mobile */
-        }
-
-        #desktop {
-            flex: none;
-            height: 50vh;
-            /* take half screen height on mobile */
-            min-height: 400px;
-            width: 100%;
-        }
-
-        #sidebar {
-            width: 100%;
-            border-left: none;
-            border-top: 4px solid #fff;
-            height: auto;
-            overflow: visible;
-            /* no internal scroll on mobile, let the container handle it */
-            padding-bottom: 80px;
-            /* space for add button */
-        }
-
-        #add-btn-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-        }
-
-        #toast {
-            right: 50%;
-            transform: translateX(50%);
-            bottom: 80px;
-        }
-
-        .draggable-asset {
-            transform: scale(0.8);
-            /* slightly smaller items on mobile */
-        }
-    }
-
-/* Mobile Responsiveness Fixes */
-@media (max-width: 768px) {
-    #add-bookmark-modal {
-        width: 90vw !important;
-        min-width: 90vw !important;
-        padding: 1rem !important;
-        margin: auto !important;
-    }
     
-    .preset-container {
-        display: grid !important;
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 8px !important;
-        justify-items: center;
-    }
-    
-    .preset-sprite {
-        width: 100% !important;
-        max-width: 40px !important;
-        height: auto !important;
-        margin: 0 !important;
-    }
-    
-    #game-container {
-        flex-direction: column;
-    }
-    
-    #sidebar {
-        width: 100vw;
-        border-right: none;
-        border-bottom: 2px solid #fff;
-    }
 }
+
+    /* Improved Mobile Layout */
+    @media (max-width: 768px) {
+        body { overflow-y: auto !important; }
+        #game-container {
+            display: block !important;
+            height: auto !important;
+            min-height: 100vh;
+        }
+        #desktop {
+            position: relative;
+            height: 60vh;
+            width: 100%;
+            overflow: hidden;
+            border-bottom: 4px solid #fff;
+        }
+        #sidebar {
+            position: relative !important;
+            top: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            max-height: none !important;
+            border: none !important;
+            padding: 15px !important;
+        }
+    }

@@ -156,30 +156,68 @@ function renderBookmarks(bookmarks) {
     if (!bookmarks) return;
 
     bookmarks.forEach(bm => {
-        let div = document.createElement('div');
-        div.className = 'draggable-asset';
-        div.id = bm.id;
-        div.setAttribute('data-x', bm.x || 0);
-        div.setAttribute('data-y', bm.y || 0);
-        div.style.transform = `translate(${bm.x || 0}px, ${bm.y || 0}px)`;
-        div.ondblclick = () => window.open(bm.url, '_blank');
+        appendBookmarkElement(bm);
+    });
+}
 
-        let iconHtml = '';
-        if (bm.icon && (bm.icon.startsWith('http') || bm.icon.startsWith('data:') || bm.icon.startsWith('assets/') || bm.icon.includes('.png') || bm.icon.includes('.gif'))) {
-            iconHtml = `<img src="${bm.icon}" class="sprite-icon" draggable="false">`;
-        } else {
-            iconHtml = `<div class="icon">${bm.icon || '💾'}</div>`;
-        }
+function appendBookmarkElement(bm) {
+    const desktop = document.getElementById('desktop');
+    let div = document.createElement('div');
+    div.className = 'draggable-asset';
+    div.id = bm.id;
 
-        div.innerHTML = `
+    // Load local storage states
+    let localStateStr = localStorage.getItem('state_' + bm.id);
+    let localState = localStateStr ? JSON.parse(localStateStr) : { locked: false, w: '', h: '' };
+
+    div.setAttribute('data-x', bm.x || 0);
+    div.setAttribute('data-y', bm.y || 0);
+    div.style.transform = `translate(${bm.x || 0}px, ${bm.y || 0}px)`;
+
+    if (localState.w && localState.h) {
+        div.style.width = localState.w;
+        div.style.height = localState.h;
+    }
+
+    if (localState.locked) {
+        div.classList.add('locked');
+    }
+
+    div.ondblclick = () => window.open(bm.url, '_blank');
+
+    let iconHtml = '';
+    if (bm.icon && (bm.icon.startsWith('http') || bm.icon.startsWith('data:') || bm.icon.startsWith('assets/') || bm.icon.includes('.png') || bm.icon.includes('.gif'))) {
+        iconHtml = `<img src="${bm.icon}" class="sprite-icon" draggable="false" style="width:100%; height:100%; object-fit:contain;">`;
+    } else {
+        iconHtml = `<div class="icon">${bm.icon || '💾'}</div>`;
+    }
+
+    div.innerHTML = `
+      <div class="lock-asset" onclick="event.stopPropagation(); toggleLock('${bm.id}')">✔</div>
       <div class="delete-asset" onclick="event.stopPropagation(); deleteBookmarkAsset('${bm.id}')">×</div>
       ${iconHtml}
       <div class="label">${bm.title}</div>
     `;
 
-        desktop.appendChild(div);
-    });
+    desktop.appendChild(div);
 }
+
+window.toggleLock = function (id) {
+    let el = document.getElementById(id);
+    if (!el) return;
+
+    let isLocked = el.classList.contains('locked');
+    if (isLocked) {
+        el.classList.remove('locked');
+    } else {
+        el.classList.add('locked');
+    }
+
+    let localStateStr = localStorage.getItem('state_' + id);
+    let localState = localStateStr ? JSON.parse(localStateStr) : { w: el.style.width, h: el.style.height };
+    localState.locked = !isLocked;
+    localStorage.setItem('state_' + id, JSON.stringify(localState));
+};
 
 // === INTERACT.JS CONFIG ===
 function setupInteractJs() {
@@ -193,6 +231,10 @@ function setupInteractJs() {
                 })
             ],
             autoScroll: false,
+            filter: function (event) {
+                // Prevent dragging if element or its parent is locked
+                return !event.target.closest('.locked');
+            },
             listeners: {
                 move: dragMoveListener,
                 end: (event) => {
@@ -205,13 +247,45 @@ function setupInteractJs() {
                         .catch(console.error);
                 }
             }
+        })
+        .resizable({
+            edges: { left: false, right: true, bottom: true, top: false },
+            listeners: {
+                move: function (event) {
+                    let target = event.target;
+                    // Prevent resizing if locked
+                    if (target.classList.contains('locked')) return;
+
+                    let x = parseFloat(target.getAttribute('data-x')) || 0;
+                    let y = parseFloat(target.getAttribute('data-y')) || 0;
+
+                    let newW = event.rect.width + 'px';
+                    let newH = event.rect.height + 'px';
+                    Object.assign(target.style, {
+                        width: newW,
+                        height: newH,
+                        transform: `translate(${x}px, ${y}px)`
+                    });
+                },
+                end: function (event) {
+                    let target = event.target;
+                    if (target.classList.contains('locked')) return;
+                    let localStateStr = localStorage.getItem('state_' + target.id);
+                    let localState = localStateStr ? JSON.parse(localStateStr) : { locked: false };
+                    localState.w = target.style.width;
+                    localState.h = target.style.height;
+                    localStorage.setItem('state_' + target.id, JSON.stringify(localState));
+                }
+            }
         });
 }
 
 function dragMoveListener(event) {
-    var target = event.target
-    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+    let target = event.target
+    if (target.classList.contains('locked')) return;
+
+    let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+    let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
     target.style.transform = `translate(${x}px, ${y}px)`
 
@@ -296,8 +370,9 @@ window.saveNewBookmark = function (e) {
     gasApiCall({ action: 'addBookmark', title: title, url: url, icon: icon, x: x, y: y })
         .then(res => {
             if (!dashboardData.bookmarks) dashboardData.bookmarks = [];
-            dashboardData.bookmarks.push({ id: res.result, title: title, url: url, icon: icon, x: x, y: y });
-            renderBookmarks(dashboardData.bookmarks);
+            let newBm = { id: res.result, title: title, url: url, icon: icon, x: x, y: y };
+            dashboardData.bookmarks.push(newBm);
+            appendBookmarkElement(newBm);
             showToast('에셋 추가됨');
         })
         .catch(console.error);
