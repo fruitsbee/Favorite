@@ -346,3 +346,37 @@
             /* slightly smaller items on mobile */
         }
     }
+
+/* Mobile Responsiveness Fixes */
+@media (max-width: 768px) {
+    #add-bookmark-modal {
+        width: 90vw !important;
+        min-width: 90vw !important;
+        padding: 1rem !important;
+        margin: auto !important;
+    }
+    
+    .preset-container {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 8px !important;
+        justify-items: center;
+    }
+    
+    .preset-sprite {
+        width: 100% !important;
+        max-width: 40px !important;
+        height: auto !important;
+        margin: 0 !important;
+    }
+    
+    #game-container {
+        flex-direction: column;
+    }
+    
+    #sidebar {
+        width: 100vw;
+        border-right: none;
+        border-bottom: 2px solid #fff;
+    }
+}
