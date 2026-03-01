@@ -308,7 +308,7 @@ window.saveNewBookmark = function (e) {
     // reset to first sprite
     let firstSprite = document.querySelector('.preset-sprite');
     if (firstSprite) {
-        window.selectSprite(firstSprite, '👾');
+        window.selectSprite(firstSprite, 'assets/sprite_0.png');
     }
 };
 
