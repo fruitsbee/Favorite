@@ -170,9 +170,21 @@ function appendBookmarkElement(bm) {
     let localStateStr = localStorage.getItem('state_' + bm.id);
     let localState = localStateStr ? JSON.parse(localStateStr) : { locked: false, w: '', h: '' };
 
-    div.setAttribute('data-x', bm.x || 0);
-    div.setAttribute('data-y', bm.y || 0);
-    div.style.transform = `translate(${bm.x || 0}px, ${bm.y || 0}px)`;
+    
+    // Use valid responsive percentages, default to center (50%) if invalid/huge pixel values
+    let safeX = parseFloat(bm.x) || 50;
+    let safeY = parseFloat(bm.y) || 50;
+    if (safeX > 100 || safeX < -50) safeX = 50; // Legacy pixel cleanup
+    if (safeY > 100 || safeY < -50) safeY = 50;
+    
+    // Position using percentages so they stick visually relative to the background
+    div.style.left = safeX + '%';
+    div.style.top = safeY + '%';
+    div.style.transform = 'translate(-50%, -50%)'; // Center pivot
+    
+    div.setAttribute('data-px', safeX);
+    div.setAttribute('data-py', safeY);
+
 
     if (localState.w && localState.h) {
         div.style.width = localState.w;
@@ -239,8 +251,11 @@ function setupInteractJs() {
                 move: dragMoveListener,
                 end: (event) => {
                     let target = event.target;
-                    let x = parseFloat(target.getAttribute('data-x')) || 0;
-                    let y = parseFloat(target.getAttribute('data-y')) || 0;
+                    let x = parseFloat(target.getAttribute('data-px')) || 50;
+                    let y = parseFloat(target.getAttribute('data-py')) || 50;
+                    // Round percentages to 2 decimal places to save space
+                    x = Math.round(x * 100) / 100;
+                    y = Math.round(y * 100) / 100;
                     let id = target.id;
 
                     gasApiCall({ action: 'saveBookmarkPosition', id: id, x: x, y: y })
@@ -256,8 +271,11 @@ function setupInteractJs() {
                     // Prevent resizing if locked
                     if (target.classList.contains('locked')) return;
 
-                    let x = parseFloat(target.getAttribute('data-x')) || 0;
-                    let y = parseFloat(target.getAttribute('data-y')) || 0;
+                    let x = parseFloat(target.getAttribute('data-px')) || 50;
+                    let y = parseFloat(target.getAttribute('data-py')) || 50;
+                    // Round percentages to 2 decimal places to save space
+                    x = Math.round(x * 100) / 100;
+                    y = Math.round(y * 100) / 100;
 
                     let newW = event.rect.width + 'px';
                     let newH = event.rect.height + 'px';
@@ -281,16 +299,26 @@ function setupInteractJs() {
 }
 
 function dragMoveListener(event) {
-    let target = event.target
+    let target = event.target;
     if (target.classList.contains('locked')) return;
-
-    let x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-    let y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
-
-    target.style.transform = `translate(${x}px, ${y}px)`
-
-    target.setAttribute('data-x', x)
-    target.setAttribute('data-y', y)
+    
+    let parent = target.parentElement.getBoundingClientRect();
+    
+    // Get current percent values
+    let currentPX = parseFloat(target.getAttribute('data-px')) || 50;
+    let currentPY = parseFloat(target.getAttribute('data-py')) || 50;
+    
+    // Add pixel movement converted to percentage of parent bounds
+    let newPX = currentPX + (event.dx / parent.width) * 100;
+    let newPY = currentPY + (event.dy / parent.height) * 100;
+    
+    // Apply new percentage
+    target.style.left = newPX + '%';
+    target.style.top = newPY + '%';
+    
+    // Update attribute cache
+    target.setAttribute('data-px', newPX);
+    target.setAttribute('data-py', newPY);
 }
 
 // === SPRITE SELECTION ===
@@ -363,7 +391,7 @@ window.saveNewBookmark = function (e) {
     if (!url.startsWith('http')) url = 'https://' + url;
 
     let x = 50;
-    let y = 50;
+    let y = 50; // Percentages
 
     document.getElementById('add-bookmark-modal').close();
 
