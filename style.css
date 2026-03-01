@@ -34,7 +34,7 @@
         height: 100vh;
         /* Reliable 16-bit aesthetic city night background */
         background-color: #0b0f19;
-        background-image: url('assets/bg.gif');
+        background-image: url('assets/bg.png');
         background-size: cover;
         background-position: center bottom;
         background-repeat: no-repeat;
