@@ -132,9 +132,15 @@ function renderBookmarks(bookmarks) {
         div.setAttribute('data-y', bm.y || 0);
         div.style.transform = `translate(${bm.x || 0}px, ${bm.y || 0}px)`;
         div.ondblclick = () => window.open(bm.url, '_blank');
+        let iconHtml = '';
+        if (bm.icon && bm.icon.startsWith('http')) {
+            iconHtml = `<img src="${bm.icon}" class="sprite-icon" draggable="false">`;
+        } else {
+            iconHtml = `<div class="icon">${bm.icon || '💾'}</div>`;
+        }
         div.innerHTML = `
       <div class="delete-asset" onclick="event.stopPropagation(); deleteBookmarkAsset('${bm.id}')">×</div>
-      <div class="icon">${bm.icon || '💾'}</div>
+      ${iconHtml}
       <div class="label">${bm.title}</div>
     `;
         desktop.appendChild(div);
@@ -173,6 +179,15 @@ function dragMoveListener(event) {
     target.setAttribute('data-x', x)
     target.setAttribute('data-y', y)
 }
+// === SPRITE SELECTION ===
+window.selectSprite = function (element, url) {
+    // Remove selected class from all
+    document.querySelectorAll('.preset-sprite').forEach(el => el.classList.remove('selected'));
+    // Add to clicked
+    element.classList.add('selected');
+    // Set hidden input value
+    document.getElementById('bm-icon').value = url;
+};
 // === MUTATION ACTIONS ===
 window.addTodoItem = function () {
     let input = document.getElementById('todo-input');
@@ -234,7 +249,11 @@ window.saveNewBookmark = function (e) {
         .catch(console.error);
     document.getElementById('bm-title').value = '';
     document.getElementById('bm-url').value = '';
-    document.getElementById('bm-icon').value = '💾';
+    // reset to first sprite
+    let firstSprite = document.querySelector('.preset-sprite');
+    if (firstSprite) {
+        window.selectSprite(firstSprite, 'https://raw.githubusercontent.com/nostalgic-css/NES.css/master/assets/mario.png');
+    }
 };
 window.deleteBookmarkAsset = function (id) {
     if (confirm('이 에셋을 삭제하시겠습니까?')) {
